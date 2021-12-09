@@ -17,21 +17,23 @@ module.exports = async (city) =>{
             city = city.split("full").join("")
             const {data : weather} = await axios(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.CLIENT_TOKEN}`)
             const {lon,lat} = weather.coord
-            console.log("Latitude : " + lat.toString() + "\n" + "Latitude : " + lon.toString())
+            console.log("Latitude : " + lat.toString() + "\n" + "Longitude : " + lon.toString())
             Object.keys(weather.main).map((key, index) => {
                 index < 4 && (weather.main[key] =  (weather.main[key] - 273.15).toFixed(2) + " degrés celcius");
                 (index === 4 || index > 5) && (weather.main[key] += " hectopascal");
                 (index === 5) && (weather.main[key] += " % d'humidité");
               })
-              Object.keys(weather.main).forEach((key, index) => console.log(mess[index] + weather.main[key])),
-                console.log(weather.weather[0].description)
+            Object.keys(weather.main).forEach((key, index) => console.log(mess[index] + weather.main[key])),
+            console.log(weather.weather[0].description)
+            console.log("\n\nSVP Entez soit : {nom de la vile} + full(pour plus d'infos)\nsoit : latitude,longitude\nTo exit type 'exit'\n\n")  
          }else{
                 const {data : weather} = await axios(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.CLIENT_TOKEN}`)
                 const {lon,lat} = weather.coord
-                console.log("Latitude : " + lat.toString() + "\n" + "Latitude : " + lon.toString())
+                console.log("Latitude : " + lat.toString() + "\n" + "Longitude : " + lon.toString())
                 console.log(`Il fait ${(weather.main.temp - 273.15).toFixed(2)} degrés celcius à ${city}`)
+                console.log("\n\nSVP Entez soit : {nom de la vile} + full(pour plus d'infos)\nsoit : latitude,longitude\nTo exit type 'exit'\n\n")
          }
     }catch(err){
-        console.log("\n"+err.message + "Enter : 4 args :city,(coordonnées ou ville),latitude,longitude([void] si pas d'argument \nSi 'ville' ajouter full pour toutes les infos")
+        console.log("\n"+err.message + "\nSVP Entez soit : {nom de la vile} + full(pour plus d'infos)\nsoit : latitude,longitude")
     }    
 }
